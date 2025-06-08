@@ -1,0 +1,33 @@
+{
+  "name": "spotify-music-graph",
+  "version": "1.0.0",
+  "description": "A web application that visualizes music taste relationships between Spotify users",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build"
+  },
+  "keywords": [
+    "spotify",
+    "music",
+    "graph",
+    "visualization",
+    "react",
+    "node"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.1.2",
+    "@react-three/fiber": "^9.1.2",
+    "framer-motion": "^12.16.0",
+    "gsap": "^3.13.0",
+    "three": "^0.177.0"
+  }
+}
