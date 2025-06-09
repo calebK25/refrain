@@ -11,69 +11,24 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const orbsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
-    const tl = gsap.timeline();
+    // Minimal entrance animation
+    const elements = [titleRef.current, subtitleRef.current, buttonRef.current];
     
-    // Set initial states
-    gsap.set([titleRef.current, subtitleRef.current, buttonRef.current], {
-      opacity: 0,
-      y: 30
-    });
-
-    // Animate entrance
-    tl.to(titleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1.2,
-      ease: "power3.out"
-    })
-    .to(subtitleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.8")
-    .to(buttonRef.current, {
+    gsap.set(elements, { opacity: 0, y: 20 });
+    
+    gsap.to(elements, {
       opacity: 1,
       y: 0,
       duration: 0.8,
-      ease: "power3.out"
-    }, "-=0.6");
-
-    // Subtle floating orbs animation
-    orbsRef.current.forEach((orb, index) => {
-      if (orb) {
-        gsap.to(orb, {
-          y: "random(-15, 15)",
-          x: "random(-15, 15)",
-          duration: "random(4, 8)",
-          repeat: -1,
-          yoyo: true,
-          ease: "power1.inOut",
-          delay: index * 0.8
-        });
-      }
+      stagger: 0.15,
+      ease: "power2.out"
     });
-
-    return () => {
-      tl.kill();
-    };
   }, []);
 
   const handleLogin = () => {
-    // Subtle button press animation
-    gsap.to(buttonRef.current, {
-      scale: 0.98,
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1,
-      ease: "power2.inOut",
-      onComplete: () => {
-        onLogin();
-      }
-    });
+    onLogin();
   };
 
   return (
@@ -81,34 +36,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       ref={containerRef}
       className="min-h-screen relative overflow-hidden bg-black"
     >
-      {/* Subtle Background Orbs */}
+      {/* Ultra Minimal Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            ref={el => el && (orbsRef.current[i] = el)}
-            className={`absolute rounded-full blur-3xl opacity-[0.03] ${
-              i % 4 === 0 ? 'bg-blue-200' : 
-              i % 4 === 1 ? 'bg-pink-200' : 
-              i % 4 === 2 ? 'bg-purple-200' : 'bg-green-200'
-            }`}
-            style={{
-              width: `${Math.random() * 400 + 200}px`,
-              height: `${Math.random() * 400 + 200}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/[0.01] rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/[0.01] rounded-full blur-3xl" />
       </div>
-
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-      />
 
       {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
@@ -118,23 +50,21 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
         >
-          {/* Minimal Logo */}
+          {/* Ultra Minimal Logo */}
           <motion.div 
-            className="mb-16"
-            whileHover={{ rotate: 45 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="mb-20"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-white flex items-center justify-center shadow-xl">
-              <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-                <div className="w-3 h-3 bg-white rounded-full"></div>
-              </div>
+            <div className="w-12 h-12 mx-auto rounded-xl bg-white flex items-center justify-center">
+              <div className="w-6 h-6 bg-black rounded-lg"></div>
             </div>
           </motion.div>
 
           {/* Title */}
           <h1 
             ref={titleRef}
-            className="text-6xl md:text-7xl font-extralight text-white mb-6 tracking-tight"
+            className="text-5xl md:text-6xl font-extralight text-white mb-8 tracking-wide"
           >
             Refrain
           </h1>
@@ -142,10 +72,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           {/* Subtitle */}
           <p 
             ref={subtitleRef}
-            className="text-lg text-gray-400 mb-16 font-light leading-relaxed max-w-md mx-auto"
+            className="text-base text-gray-500 mb-20 font-extralight leading-relaxed max-w-xs mx-auto"
           >
-            Visualize your musical universe.<br />
-            <span className="text-gray-500">A minimalist approach to music discovery.</span>
+            Musical universe visualization
           </p>
 
           {/* Connect Button */}
@@ -164,24 +93,17 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             </span>
           </motion.button>
 
-          {/* Features - Minimal */}
+          {/* Ultra Minimal Features */}
           <motion.div 
-            className="mt-20 grid grid-cols-3 gap-8 text-center max-w-md mx-auto"
+            className="mt-24 flex justify-center space-x-8 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 1 }}
           >
-            {[
-              { label: 'Interactive', color: 'blue' },
-              { label: 'Intelligent', color: 'pink' },
-              { label: 'Realtime', color: 'purple' }
-            ].map((feature, i) => (
-              <div key={feature.label} className="space-y-3">
-                <div className={`w-2 h-2 mx-auto rounded-full ${
-                  feature.color === 'blue' ? 'bg-blue-300' :
-                  feature.color === 'pink' ? 'bg-pink-300' : 'bg-purple-300'
-                }`}></div>
-                <p className="text-gray-500 text-sm font-light">{feature.label}</p>
+            {['Intelligent', 'Minimal', 'Real-time'].map((feature, i) => (
+              <div key={feature} className="space-y-3">
+                <div className="w-1 h-1 mx-auto rounded-full bg-white/30"></div>
+                <p className="text-gray-600 text-xs font-extralight tracking-wide">{feature}</p>
               </div>
             ))}
           </motion.div>

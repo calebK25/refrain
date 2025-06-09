@@ -73,8 +73,7 @@ function App() {
         // Clear the token from URL
         window.history.replaceState({}, document.title, '/dashboard');
       } catch (error) {
-        console.error('Token exchange failed:', error);
-        alert('Authentication failed. Please try logging in again.');
+        // Silently handle token exchange failure
         window.history.replaceState({}, document.title, '/');
       } finally {
         setLoading(false);
@@ -122,8 +121,13 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-4 h-4 bg-black rounded-lg animate-pulse"></div>
+          </div>
+          <div className="text-white text-lg font-light">Loading...</div>
+        </div>
       </div>
     );
   }
@@ -131,20 +135,18 @@ function App() {
   // Show backend connection error
   if (!backendHealth || backendHealth.status !== 'ok') {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="bg-red-900 border border-red-700 rounded-lg p-6 max-w-md">
-          <h2 className="text-red-200 text-xl font-bold mb-4">Backend Connection Error</h2>
-          <p className="text-red-300 mb-4">
-            Cannot connect to the backend server. Please make sure:
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="bg-gray-950/80 backdrop-blur border border-gray-900 rounded-xl p-8 max-w-md text-center">
+          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-6 h-6 bg-black rounded-lg"></div>
+          </div>
+          <h2 className="text-white text-xl font-light mb-4">Connection Error</h2>
+          <p className="text-gray-400 mb-4 font-light">
+            Cannot connect to the backend server.
           </p>
-          <ul className="text-red-300 list-disc list-inside space-y-1 mb-4">
-            <li>Backend server is running on port 3000</li>
-            <li>CORS is properly configured</li>
-            <li>Network connection is available</li>
-          </ul>
           <button
             onClick={checkBackendHealth}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+            className="bg-white hover:bg-gray-100 text-black px-6 py-2 rounded-lg font-medium transition-colors"
           >
             Retry Connection
           </button>
@@ -156,20 +158,18 @@ function App() {
   // Show Spotify configuration error
   if (!backendHealth.spotify_configured) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="bg-yellow-900 border border-yellow-700 rounded-lg p-6 max-w-md">
-          <h2 className="text-yellow-200 text-xl font-bold mb-4">Spotify Configuration Missing</h2>
-          <p className="text-yellow-300 mb-4">
-            Spotify API credentials are not configured. Please:
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="bg-gray-950/80 backdrop-blur border border-gray-900 rounded-xl p-8 max-w-md text-center">
+          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-6 h-6 bg-black rounded-lg"></div>
+          </div>
+          <h2 className="text-white text-xl font-light mb-4">Configuration Missing</h2>
+          <p className="text-gray-400 mb-4 font-light">
+            Spotify API credentials are not configured.
           </p>
-          <ul className="text-yellow-300 list-disc list-inside space-y-1 mb-4">
-            <li>Set SPOTIFY_CLIENT_ID environment variable</li>
-            <li>Set SPOTIFY_CLIENT_SECRET environment variable</li>
-            <li>Restart the backend server</li>
-          </ul>
           <button
             onClick={checkBackendHealth}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded"
+            className="bg-white hover:bg-gray-100 text-black px-6 py-2 rounded-lg font-medium transition-colors"
           >
             Check Again
           </button>

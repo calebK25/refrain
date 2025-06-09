@@ -141,8 +141,8 @@ class SpotifyApiService {
       const response: AxiosResponse<UserResponse> = await axios.post(`${this.baseUrl}/auth/exchange-token`, { token });
       return response.data;
     } catch (error) {
-      console.error('Token exchange failed:', error);
-      throw new Error('Failed to exchange token');
+      // Silently handle token exchange failure
+      throw new Error('Authentication expired');
     }
   }
 
