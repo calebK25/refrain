@@ -13,6 +13,12 @@ A web application that visualizes music taste relationships between Spotify user
   - Genre preferences
 - **Real-time Dashboard**: View your music statistics and listening habits
 - **Dark Theme**: Obsidian-inspired dark interface with glowing animations
+- <img width="1527" height="857" alt="image" src="https://github.com/user-attachments/assets/ad4db8eb-ea1f-4c8d-a759-1ceb1da2795a" />
+- <img width="1527" height="857" alt="image" src="https://github.com/user-attachments/assets/81d24ad3-a09b-4bed-b748-d618af59ac4c" />
+- <img width="1527" height="857" alt="image" src="https://github.com/user-attachments/assets/a8e76f18-9a9f-4748-9f9f-9a8e36bbd0ef" />
+
+
+
 
 ## 🚀 Quick Start
 
